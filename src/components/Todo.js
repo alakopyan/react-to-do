@@ -8,28 +8,32 @@ export default function Todo({
   completed,
 }) {
   return (
-    <li className="todoItem">
-      <div>
+    <li className="toDoItem">
+      <div className="toDoItemWrapper">
         <input
+          className="checkboxItem"
           id={`todo-${id}`}
           type="checkbox"
           checked={completed}
           onChange={() => toggleTaskCompleted(id)}
         />
         <label
-          className="todo-label"
+          className="todoLabel"
           htmlFor={`todo-${id}`}
-          style={{ textDecoration: completed ? "line-through" : "initial" }}
+          style={{
+            textDecoration: completed ? "line-through" : "initial",
+            opacity: completed ? 0.5 : "initial",
+          }}
         >
           {name}
         </label>
       </div>
       <button
         type="button"
-        className="btn btn__danger"
+        className="btn btnDanger"
         onClick={() => deleteTask(id)}
       >
-        Delete <span className="visually-hidden">{name}</span>
+      x
       </button>
     </li>
   );
