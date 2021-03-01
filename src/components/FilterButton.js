@@ -1,10 +1,10 @@
 import React from "react";
 
-function FilterButton({setFilter, isPressed, name}) {
+function FilterButton({ setFilter, isPressed, name }) {
   return (
     <button
       type="button"
-      className="btn toggle-btn"
+      className="btn toggleBtn"
       aria-pressed={isPressed}
       onClick={() => setFilter(name)}
     >
