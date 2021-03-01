@@ -69,13 +69,17 @@ function App() {
   }
 
   return (
-    <div className="toDo">
-      <Form addTask={addTask} />
-      <ul>{taskList}</ul>
+    <div>
+      <div className="headTodo">todos</div>
 
-      <div className="bottomLine">
-        <h2 id="list-heading">{tasksRemaining}</h2>
-        <div className="filters btn-group stack-exception">{filterList}</div>
+      <div className="toDo">
+        <Form addTask={addTask} />
+        <ul className="toDoList">{taskList}</ul>
+
+        <div className="bottomLine">
+          <p id="listHeading">{tasksRemaining} items left</p>
+          <div className="filters btnGroup stackException">{filterList}</div>
+        </div>
       </div>
     </div>
   );
