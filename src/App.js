@@ -3,6 +3,7 @@ import Todo from "./components/Todo.js";
 import Form from "./components/Form.js";
 import FilterButton from "./components/FilterButton.js";
 import React, { useState, useEffect } from "react";
+import sendRequest from "./service/ApiService.js";
 
 const FILTER_MAP = {
   All: () => true,
@@ -21,24 +22,20 @@ function App() {
 
   useEffect(() => {
     setTasksRemaining(tasks.filter((task) => !task.completed).length);
-  });
-
-  console.log("tasks => ", tasks);
+  }, [tasks]);
 
   const taskList = tasks
     .filter(FILTER_MAP[filter])
     .map((task) => (
       <Todo
+        key={task._id}
         id={task._id}
         name={task.title}
         completed={task.isDone}
-        key={task.id}
         deleteTask={deleteTask}
         updateTask={updateTask}
       />
     ));
-
-  console.log("taskList", taskList);
 
   const filterList = FILTER_NAMES.map((name) => (
     <FilterButton
@@ -49,14 +46,8 @@ function App() {
     />
   ));
 
-  useEffect(() => {
-    fetch("https://exceed-todo-list.herokuapp.com/api/v1/todos", {
-      method: "GET",
-      headers: {
-        apikey: "39d77f49-c419-43c9-8cad-02e8e7fc9a83",
-        "Content-Type": "application/json",
-      },
-    })
+  const fetchAll = () =>
+    sendRequest(``, "GET")
       .then((res) => res.json())
       .then(
         (result) => {
@@ -68,16 +59,13 @@ function App() {
           setError(error);
         }
       );
+
+  useEffect(() => {
+    fetchAll();
   }, []);
 
   function updateTask(id) {
-    fetch(`https://exceed-todo-list.herokuapp.com/api/v1/todos/${id}/done`, {
-      method: "PUT",
-      headers: {
-        apikey: "39d77f49-c419-43c9-8cad-02e8e7fc9a83",
-        "Content-Type": "application/json",
-      },
-    }).then(() => {
+    sendRequest(`${id}/done`, "PUT").then(() => {
       const completedTasks = tasks.map((item) => {
         if (id === item._id) {
           item.isDone = !item.isDone;
@@ -89,24 +77,13 @@ function App() {
   }
 
   function addTask(name) {
-    fetch("https://exceed-todo-list.herokuapp.com/api/v1/todos", {
-      method: "POST",
-      headers: {
-        apikey: "39d77f49-c419-43c9-8cad-02e8e7fc9a83",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ title: name }),
-    }).then(() => setTasks(tasks));
+    sendRequest(``, `POST`, { title: name }).then(() => {
+      fetchAll();
+    });
   }
 
   function deleteTask(id) {
-    fetch(`https://exceed-todo-list.herokuapp.com/api/v1/todos/${id}`, {
-      method: "DELETE",
-      headers: {
-        apikey: "39d77f49-c419-43c9-8cad-02e8e7fc9a83",
-        "Content-Type": "application/json",
-      },
-    })
+    sendRequest(`${id}`, "DELETE")
       .then(() => {
         const updatedTask = tasks.filter((item) => item._id !== id);
         setTasks(updatedTask);
