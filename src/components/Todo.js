@@ -1,12 +1,6 @@
 import React from "react";
 
-export default function Todo({
-  id,
-  name,
-  deleteTask,
-  toggleTaskCompleted,
-  completed,
-}) {
+export default function Todo({ id, name, deleteTask, updateTask, completed }) {
   return (
     <li className="toDoItem">
       <div className="toDoItemWrapper">
@@ -15,7 +9,7 @@ export default function Todo({
           id={`todo-${id}`}
           type="checkbox"
           checked={completed}
-          onChange={() => toggleTaskCompleted(id)}
+          onChange={() => updateTask(id)}
         />
         <label
           className="todoLabel"
@@ -33,7 +27,7 @@ export default function Todo({
         className="btn btnDanger"
         onClick={() => deleteTask(id)}
       >
-      x
+        x
       </button>
     </li>
   );
