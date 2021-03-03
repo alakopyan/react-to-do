@@ -9,7 +9,7 @@ function Form({ addTask }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    if(name !== '')addTask(name);
+    if (name !== "") addTask(name);
     setName("");
   }
 
