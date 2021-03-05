@@ -1,6 +1,6 @@
 const sendRequest = (address, method, body) => {
   return fetch(
-    `https://exceed-todo-list.herokuapp.com/api/v1/todos/${address}`,
+    `/api/tasks/${address}`,
     {
       method,
       headers: {
