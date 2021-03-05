@@ -30,7 +30,7 @@ function App() {
       <Todo
         key={task._id}
         id={task._id}
-        name={task.title}
+        title={task.title}
         completed={task.isDone}
         deleteTask={deleteTask}
         updateTask={updateTask}
