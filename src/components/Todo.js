@@ -19,7 +19,7 @@ export default function Todo({ id, name, deleteTask, updateTask, completed }) {
             opacity: completed ? 0.5 : "initial",
           }}
         >
-          {name}
+          {title}
         </label>
       </div>
       <button
